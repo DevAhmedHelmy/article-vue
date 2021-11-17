@@ -1,7 +1,6 @@
-import Home from "@/pages/frontend/Home";
-import login from "@/pages/frontend/login";
-import register from "@/pages/frontend/register";
-import cart from "@/pages/frontend/cart";
+import Home from "@/pages/front/Home";
+import login from "@/pages/front/login";
+
 export default [
   {
     path: "/",
@@ -17,22 +16,5 @@ export default [
     },
 
     name: "login",
-  },
-  {
-    path: "register",
-    components: {
-      frontendPages: register,
-    },
-
-    name: "register",
-  },
-  {
-    path: "cart",
-    meta: { auth: true },
-    components: {
-      frontendPages: cart,
-    },
-
-    name: "cart",
   },
 ];
