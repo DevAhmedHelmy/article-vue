@@ -1,5 +1,8 @@
 import Home from "@/pages/front/Home";
-import login from "@/pages/front/login";
+import about from "@/pages/front/about";
+import contact from "@/pages/front/contact";
+import login from "@/pages/front/auth/login";
+import register from "@/pages/front/auth/register";
 import showArticle from "@/pages/front/showArticle";
 export default [
   {
@@ -17,11 +20,33 @@ export default [
     },
   },
   {
+    path: "about",
+    name: "about",
+    components: {
+      frontendPages: about,
+    },
+  },
+  {
+    path: "contact",
+    name: "contact",
+    components: {
+      frontendPages: contact,
+    },
+  },
+  {
     path: "/login",
     components: {
       frontendPages: login,
     },
 
     name: "login",
+  },
+  {
+    path: "/register",
+    components: {
+      frontendPages: register,
+    },
+
+    name: "register",
   },
 ];

@@ -18,23 +18,29 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ms-auto py-4 py-lg-0">
             <li class="nav-item">
-              <a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html"
-                >Home</a
+              <router-link class="nav-link px-lg-3 py-3 py-lg-4" to="/"
+                >Home</router-link
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html"
-                >About</a
+              <router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{name:'about'}"
+                >About</router-link
+              >
+            </li>
+           
+            <li class="nav-item">
+              <router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{name:'contact'}"
+                >Contact</router-link
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html"
-                >Sample Post</a
+              <router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{name:'login'}"
+                >login</router-link
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html"
-                >Contact</a
+              <router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{name:'register'}"
+                >register</router-link
               >
             </li>
           </ul>
