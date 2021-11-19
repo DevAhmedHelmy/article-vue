@@ -2,56 +2,57 @@ import $axios from "@/core/plugins/axios";
 import Swal from "sweetalert2";
 export default {
   state: () => ({
-    Carts: {},
+    articles: {},
   }),
 
   mutations: {
-    setCarts(state, Carts) {
-      state.Carts = Carts;
+    setArticles(state, articles) {
+      state.articles = articles;
     },
   },
   actions: {
-    async storeCart(vuexContext, { URL, data }) {
+    async storeArticle(vuexContext, { URL, data }) {
       try {
         await $axios.post(`${URL}`, data);
         Swal.fire(
           "Changes Saved",
-          "The Cart details have been updated",
+          "The Article details have been updated",
           "success"
         );
       } catch (error) {
         throw error.response.data.errors;
       }
     },
-    async fetchCarts(vuexContext, paramObject) {
+    async fetchArticles(vuexContext, paramObject) {
       try {
-        const Carts = await $axios.get(paramObject.URL);
-        await vuexContext.commit("setCarts", Carts.data);
+        const articles = await $axios.get(paramObject.URL);
+
+        await vuexContext.commit("setArticles", articles.data);
       } catch (error) {
         throw error.response.data.errors;
       }
     },
-    async getCart(vuexContext, paramObject) {
-      const Cart = await $axios.get(paramObject.URL);
-      return Cart;
+    async getArticle(vuexContext, paramObject) {
+      const article = await $axios.get(paramObject.URL);
+      return article;
     },
-    async updateCart(vuexContext, paramObject) {
+    async updateArticle(vuexContext, paramObject) {
       try {
         await $axios.post(paramObject.URL, paramObject.data);
         Swal.fire(
           "Changes Saved",
-          "The Cart details have been updated",
+          "The Article details have been updated",
           "success"
         );
       } catch (error) {
         throw error.response.data.errors;
       }
     },
-    async deleteCart(vuexContext, URL) {
+    async deleteArticle(vuexContext, URL) {
       try {
-        const Cart = await $axios.delete(URL);
+        const Article = await $axios.delete(URL);
         vuexContext.dispatch("swalSuccess", "Deleted");
-        return Cart.data;
+        return Article.data;
       } catch (error) {
         Swal.fire({
           title: "Warrning",
@@ -64,8 +65,8 @@ export default {
     },
   },
   getters: {
-    getCarts(state) {
-      return state.Carts;
+    getArticles(state) {
+      return state.articles;
     },
   },
 };
