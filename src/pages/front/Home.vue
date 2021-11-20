@@ -53,11 +53,9 @@
              <hr class="my-4" />
  
           </div>
-          <!-- Divider-->
-         
-
+          <!-- Divider--> 
           
-          <div class="d-flex justify-content-end mb-4"   v-for="link in links" :key="link.label">
+          <div class="d-flex justify-content-end mb-4"   v-for="link in links" :key="link.active">
             <button class="btn btn-primary text-uppercase"  @click="getAllArticle(link.url)"
               >{{link.label}}</button
             >
@@ -101,7 +99,7 @@ export default {
         URL: "articles"+page,
       });
       this.links = await this.articles.links.filter((link) => {
-      console.log(link)
+       
        return !link.label.includes('pagination')
     })
     },
