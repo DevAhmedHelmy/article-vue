@@ -38,7 +38,7 @@ export default {
     },
     async updateArticle(vuexContext, paramObject) {
       try {
-        await $axios.post(paramObject.URL, paramObject.data);
+        await $axios.put(paramObject.URL, paramObject.data);
         Swal.fire(
           "Changes Saved",
           "The Article details have been updated",

@@ -23,6 +23,11 @@
               >
             </li>
             <li class="nav-item">
+              <router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{name:'create-article'}"
+                >Create New Article</router-link
+              >
+            </li>
+            <li class="nav-item">
               <router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{name:'about'}"
                 >About</router-link
               >

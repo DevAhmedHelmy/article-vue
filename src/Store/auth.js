@@ -17,8 +17,10 @@ export default {
       try {
         const authUser = await $axios.post("/login", data);
         // These are the Var in the response of the api/login
-        const user = authUser.data.user;
+
+        const user = authUser.data.data;
         const token = authUser.data.access_token;
+        localStorage.removeItem("authToken");
         localStorage.setItem("authToken", token);
         // This is functions in  mutations I call it for change values in state
         vuexContext.commit("setUserData", user);

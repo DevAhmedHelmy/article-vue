@@ -31,25 +31,17 @@
             <!-- To make this form functional, sign up at-->
             <!-- https://startbootstrap.com/solution/contact-forms-->
             <!-- to get an API token!-->
-            <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-              <div class="form-floating">
-                <input
-                  class="form-control"
-                  id="name"
-                  type="text"
-                  placeholder="Enter your name..."
-                  data-sb-validations="required"
-                />
-                <label for="name">Name</label>
-                <div class="invalid-feedback" data-sb-feedback="name:required">
-                  A name is required.
-                </div>
-              </div>
+            <div class="alert alert-danger" role="alert" v-if="errors">
+              <p>{{ errors }}</p>
+            </div>
+            <form @submit.prevent="login">
+             
               <div class="form-floating">
                 <input
                   class="form-control"
                   id="email"
                   type="email"
+                  v-model="formData.email"
                   placeholder="Enter your email..."
                   data-sb-validations="required,email"
                 />
@@ -61,63 +53,30 @@
                   Email is not valid.
                 </div>
               </div>
-              <div class="form-floating">
+               <div class="form-floating">
                 <input
                   class="form-control"
-                  id="phone"
-                  type="tel"
-                  placeholder="Enter your phone number..."
-                  data-sb-validations="required"
+                  id="password"
+                  type="password"
+                  v-model="formData.password"
+                  placeholder="Enter your password..."
+                  data-sb-validations="required,password"
                 />
-                <label for="phone">Phone Number</label>
-                <div class="invalid-feedback" data-sb-feedback="phone:required">
-                  A phone number is required.
+                <label for="password">password address</label>
+                <div class="invalid-feedback" data-sb-feedback="password:required">
+                  An password is required.
+                </div>
+                <div class="invalid-feedback" data-sb-feedback="password:password">
+                  password is not valid.
                 </div>
               </div>
-              <div class="form-floating">
-                <textarea
-                  class="form-control"
-                  id="message"
-                  placeholder="Enter your message here..."
-                  style="height: 12rem"
-                  data-sb-validations="required"
-                ></textarea>
-                <label for="message">Message</label>
-                <div
-                  class="invalid-feedback"
-                  data-sb-feedback="message:required"
-                >
-                  A message is required.
-                </div>
-              </div>
+              
               <br />
-              <!-- Submit success message-->
-              <!---->
-              <!-- This is what your users will see when the form-->
-              <!-- has successfully submitted-->
-              <div class="d-none" id="submitSuccessMessage">
-                <div class="text-center mb-3">
-                  <div class="fw-bolder">Form submission successful!</div>
-                  To activate this form, sign up at
-                  <br />
-                  <a href="https://startbootstrap.com/solution/contact-forms"
-                    >https://startbootstrap.com/solution/contact-forms</a
-                  >
-                </div>
-              </div>
-              <!-- Submit error message-->
-              <!---->
-              <!-- This is what your users will see when there is-->
-              <!-- an error submitting the form-->
-              <div class="d-none" id="submitErrorMessage">
-                <div class="text-center text-danger mb-3">
-                  Error sending message!
-                </div>
-              </div>
-              <!-- Submit Button-->
+            
+          
               <button
-                class="btn btn-primary text-uppercase disabled"
-                id="submitButton"
+                class="btn btn-primary text-uppercase "
+               
                 type="submit"
               >
                 Send
@@ -131,8 +90,32 @@
 </template>
 
 <script>
+import { store } from "../../../Store/store";
 export default {
-  name:"login"
+  name:"login",
+  data(){
+    return{
+      formData:{},
+       errors: null,
+    }
+  },
+  methods:{
+    async login() {
+      try {
+        await this.$store.dispatch("login", this.formData);
+        this.$router.push({ name: "Home" });
+      } catch (error) {
+        this.errors = error.message;
+      }
+    },
+    beforeRouteEnter(to, from, next) {
+      if (!store.getters.loggedin) {
+        next();
+      } else {
+        next({ name: "Home" });
+      }
+    },
+  }
 };
 </script>
 

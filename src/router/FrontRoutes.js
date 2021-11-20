@@ -3,7 +3,9 @@ import about from "@/pages/front/about";
 import contact from "@/pages/front/contact";
 import login from "@/pages/front/auth/login";
 import register from "@/pages/front/auth/register";
-import showArticle from "@/pages/front/showArticle";
+import showArticle from "@/pages/front/articles/show";
+import editArticle from "@/pages/front/articles/edit";
+import createArticle from "@/pages/front/articles/create";
 export default [
   {
     path: "/",
@@ -17,6 +19,23 @@ export default [
     name: "show-article",
     components: {
       frontendPages: showArticle,
+    },
+  },
+  {
+    path: "articles/edit/:id",
+    name: "edit-article",
+    components: {
+      frontendPages: editArticle,
+    },
+  },
+  {
+    path: "create/articles",
+    name: "create-article",
+    components: {
+      frontendPages: createArticle,
+    },
+    meta: {
+      requiresAuth: true,
     },
   },
   {
