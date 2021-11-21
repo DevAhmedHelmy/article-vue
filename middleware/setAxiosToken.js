@@ -1,4 +1,4 @@
-import $axios from "@/core/plugins/axios";
+import axios from "axios";
 export default function (token) {
-  $axios.defaults.headers.common["Authorization"] = `${token}`;
+  axios.defaults.headers.common["Authorization"] = `${token}`;
 }

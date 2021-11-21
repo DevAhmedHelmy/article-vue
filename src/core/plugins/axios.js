@@ -14,4 +14,6 @@ axiosInstance.interceptors.response.use(null, (error) => {
   return Promise.reject(error);
 });
 
+window.$axios = axiosInstance;
+
 export default axiosInstance;

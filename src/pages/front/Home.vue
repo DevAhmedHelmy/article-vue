@@ -40,14 +40,14 @@
               <a href="#!">{{ article.author }}</a>
               on {{ article.created_at }}
             </p>
-            <p v-if="user.id == article.user_id">
-              <router-link
+            <p >
+              <router-link v-if="isLoggedIn && user.id == article.user_id"
                 :to="{ name: 'edit-article', params: { id: article.id } }"
               >
                 edit
               </router-link>
             </p>
-            <p v-if="user.id == article.user_id">
+            <p  v-if="isLoggedIn && user.id == article.user_id">
               <a @click.prevent="deleteArticle(article.id)">Delete</a>
             </p>
             <hr class="my-4" />
@@ -79,13 +79,19 @@ export default {
   name: "Home",
   data() {
     return {
-      user: this.$store.state.user,
       links: [],
     };
   },
   computed: {
     articles() {
       return this.$store.getters.getArticles;
+    },
+
+    user: function () {
+      return this.$store.getters.StateUser;
+    },
+    isLoggedIn: function () {
+      return this.$store.getters.loggedin;
     },
   },
   created() {

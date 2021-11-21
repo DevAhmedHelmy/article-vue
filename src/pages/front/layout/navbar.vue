@@ -44,27 +44,28 @@
                 >Contact</router-link
               >
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-if="!isLoggedIn">
               <router-link
                 class="nav-link px-lg-3 py-3 py-lg-4"
                 :to="{ name: 'login' }"
                 >login</router-link
               >
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-if="!isLoggedIn">
               <router-link
                 class="nav-link px-lg-3 py-3 py-lg-4"
                 :to="{ name: 'register' }"
                 >register</router-link
               >
             </li>
-            <li class="nav-item" id="logout">
+            <li class="nav-item" id="logout" v-if="isLoggedIn">
               <a
                 @click="logout"
                 id="logout"
                 class="nav-link px-lg-3 py-3 py-lg-4"
               >
                 Logout
+                <!-- {{ isLoggedIn }} -->
               </a>
             </li>
           </ul>
@@ -81,6 +82,11 @@ export default {
     return {
       user: this.$store.state.user,
     };
+  },
+  computed: {
+    isLoggedIn: function () {
+      return this.$store.getters.loggedin;
+    },
   },
   methods: {
     logout() {

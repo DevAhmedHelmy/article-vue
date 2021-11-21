@@ -1,4 +1,4 @@
-import $axios from "@/core/plugins/axios";
+import axios from "axios";
 import Swal from "sweetalert2";
 export default {
   state: () => ({
@@ -13,7 +13,7 @@ export default {
   actions: {
     async storeArticle(vuexContext, { URL, data }) {
       try {
-        await $axios.post(`${URL}`, data);
+        await axios.post(`${URL}`, data);
         Swal.fire(
           "Changes Saved",
           "The Article details have been updated",
@@ -25,7 +25,7 @@ export default {
     },
     async fetchArticles(vuexContext, paramObject) {
       try {
-        const articles = await $axios.get(paramObject.URL);
+        const articles = await axios.get(paramObject.URL);
 
         await vuexContext.commit("setArticles", articles.data);
       } catch (error) {
@@ -33,12 +33,12 @@ export default {
       }
     },
     async getArticle(vuexContext, paramObject) {
-      const article = await $axios.get(paramObject.URL);
+      const article = await axios.get(paramObject.URL);
       return article;
     },
     async updateArticle(vuexContext, paramObject) {
       try {
-        await $axios.put(paramObject.URL, paramObject.data);
+        await axios.put(paramObject.URL, paramObject.data);
         Swal.fire(
           "Changes Saved",
           "The Article details have been updated",
@@ -50,7 +50,7 @@ export default {
     },
     async deleteArticle(vuexContext, URL) {
       try {
-        const Article = await $axios.delete(URL);
+        const Article = await axios.delete(URL);
         vuexContext.dispatch("swalSuccess", "Deleted");
         return Article.data;
       } catch (error) {

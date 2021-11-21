@@ -1,17 +1,38 @@
-import $axios from "@/core/plugins/axios";
-import setToken from "../../middleware/setAxiosToken";
+import axios from "axios";
+
 export default {
+  state: {
+    user: null,
+    token: null,
+  },
+  getters: {
+    isAuthenticated: (state) => !!state.user,
+
+    StateUser: (state) => state.user,
+    loggedin(state) {
+      if (state.token != null) {
+        if (state.token != undefined) {
+          if (state.token != "") {
+            return true;
+          }
+        }
+      }
+      state.token = null;
+      return false;
+    },
+  },
+
   actions: {
     async login(vuexContext, data) {
       try {
-        const authUser = await $axios.post("/login", data);
+        const authUser = await axios.post("/login", data);
         // These are the Var in the response of the api/login
         const user = authUser.data.data;
         const token = authUser.data.access_token;
         // This is functions in  mutations I call it for change values in state
         vuexContext.commit("setAuthToken", token);
         vuexContext.commit("setCurrentUser", user);
-        setToken(token);
+        axios.defaults.headers.common["Authorization"] = `${token}`;
         // The promise that will we back to the login.vue
         return authUser;
       } catch (error) {
@@ -24,9 +45,10 @@ export default {
         }
       }
     },
+
     async register(vuexContext, data) {
       try {
-        const authUser = await $axios.post("/register", data);
+        const authUser = await axios.post("/register", data);
         // These are the Var in the response of the api/login
         const user = authUser.data.user;
         const token = authUser.data.access_token;
@@ -35,7 +57,7 @@ export default {
 
         vuexContext.commit("setAuthToken", token);
         vuexContext.commit("setCurrentUser", user);
-        setToken(token);
+        axios.defaults.headers.common["Authorization"] = `${token}`;
         // The promise that will we back to the login.vue
         return authUser;
       } catch (error) {
@@ -49,13 +71,25 @@ export default {
     },
     async destroyToken(context) {
       try {
-        const logout = await $axios.post("/logout");
+        const logout = await axios.post("/logout");
         context.commit("destroyToken");
 
         return logout;
       } catch (error) {
         context.commit("destroyToken");
       }
+    },
+  },
+  mutations: {
+    setCurrentUser(state, userData) {
+      state.user = userData;
+    },
+    setAuthToken(state, token) {
+      state.token = token;
+    },
+    destroyToken(state) {
+      state.user = null;
+      state.token = null;
     },
   },
 };
