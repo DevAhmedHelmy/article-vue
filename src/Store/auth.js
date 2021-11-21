@@ -32,9 +32,10 @@ export default {
         const token = authUser.data.access_token;
         localStorage.setItem("authToken", token);
         // This is functions in  mutations I call it for change values in state
-        vuexContext.commit("setUserData", user);
+
         vuexContext.commit("setAuthToken", token);
         vuexContext.commit("setCurrentUser", user);
+        setToken(token);
         // The promise that will we back to the login.vue
         return authUser;
       } catch (error) {

@@ -4,9 +4,7 @@ const axiosInstance = axios.create();
 
 axiosInstance.defaults.baseURL = `http://localhost:8000/api/`;
 axiosInstance.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-axiosInstance.defaults.headers.common["Authorization"] =
-  localStorage.getItem("authToken");
-console.log(localStorage.getItem("authToken"))
+
 axiosInstance.defaults.headers.common["Content-Type"] = "application/json";
 
 axiosInstance.interceptors.response.use(null, (error) => {
