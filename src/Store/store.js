@@ -2,8 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 Vue.use(Vuex);
 
-import Auth from "./auth";
-import Article from "./article";
+import Auth from "./Auth";
+import Article from "./Article";
 
 export const store = new Vuex.Store({
   state: {

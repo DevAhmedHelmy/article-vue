@@ -1,5 +1,5 @@
 <template>
-   <div>
+  <div>
     <header
       class="masthead"
       style="background-image: url('assets/assets/img/contact-bg.jpg')"
@@ -24,19 +24,22 @@
             and I will get back to you as soon as possible!
           </p>
           <div class="my-5">
-            <!-- * * * * * * * * * * * * * * *-->
-            <!-- * * SB Forms Contact Form * *-->
-            <!-- * * * * * * * * * * * * * * *-->
-            <!-- This form is pre-integrated with SB Forms.-->
-            <!-- To make this form functional, sign up at-->
-            <!-- https://startbootstrap.com/solution/contact-forms-->
-            <!-- to get an API token!-->
-            <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+            <form @submit.prevent="register">
+              <div v-if="errors">
+                <div class="alert alert-danger" role="alert">
+                  <ul>
+                    <li v-for="(error, index) in errors" :key="index">
+                      {{ error[0] }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
               <div class="form-floating">
                 <input
                   class="form-control"
                   id="name"
                   type="text"
+                  v-model="registerForm.name"
                   placeholder="Enter your name..."
                   data-sb-validations="required"
                 />
@@ -50,77 +53,42 @@
                   class="form-control"
                   id="email"
                   type="email"
+                  v-model="registerForm.email"
                   placeholder="Enter your email..."
                   data-sb-validations="required,email"
                 />
                 <label for="email">Email address</label>
-                <div class="invalid-feedback" data-sb-feedback="email:required">
-                  An email is required.
-                </div>
-                <div class="invalid-feedback" data-sb-feedback="email:email">
-                  Email is not valid.
-                </div>
               </div>
               <div class="form-floating">
                 <input
                   class="form-control"
-                  id="phone"
-                  type="tel"
+                  type="password"
+                  v-model="registerForm.password"
                   placeholder="Enter your phone number..."
                   data-sb-validations="required"
                 />
-                <label for="phone">Phone Number</label>
-                <div class="invalid-feedback" data-sb-feedback="phone:required">
-                  A phone number is required.
-                </div>
+                <label for="phone">password</label>
               </div>
               <div class="form-floating">
-                <textarea
+                <input
                   class="form-control"
-                  id="message"
-                  placeholder="Enter your message here..."
-                  style="height: 12rem"
+                  type="password"
+                  v-model="registerForm.password_confirmation"
+                  placeholder="Enter your phone number..."
                   data-sb-validations="required"
-                ></textarea>
-                <label for="message">Message</label>
-                <div
-                  class="invalid-feedback"
-                  data-sb-feedback="message:required"
-                >
-                  A message is required.
-                </div>
+                />
+                <label for="phone">password_confirmation</label>
               </div>
+
               <br />
-              <!-- Submit success message-->
-              <!---->
-              <!-- This is what your users will see when the form-->
-              <!-- has successfully submitted-->
-              <div class="d-none" id="submitSuccessMessage">
-                <div class="text-center mb-3">
-                  <div class="fw-bolder">Form submission successful!</div>
-                  To activate this form, sign up at
-                  <br />
-                  <a href="https://startbootstrap.com/solution/contact-forms"
-                    >https://startbootstrap.com/solution/contact-forms</a
-                  >
-                </div>
-              </div>
-              <!-- Submit error message-->
-              <!---->
-              <!-- This is what your users will see when there is-->
-              <!-- an error submitting the form-->
-              <div class="d-none" id="submitErrorMessage">
-                <div class="text-center text-danger mb-3">
-                  Error sending message!
-                </div>
-              </div>
+
               <!-- Submit Button-->
               <button
-                class="btn btn-primary text-uppercase disabled"
+                class="btn btn-primary text-uppercase"
                 id="submitButton"
                 type="submit"
               >
-                Send
+                Register
               </button>
             </form>
           </div>
@@ -131,11 +99,34 @@
 </template>
 
 <script>
+import { store } from "../../../Store/Store";
 export default {
-name:"register"
-}
+  name: "register",
+  data() {
+    return {
+      registerForm: {},
+      errors: null,
+    };
+  },
+  methods: {
+    async register() {
+      try {
+        await this.$store.dispatch("register", this.registerForm);
+        this.$router.push({ name: "Home" });
+      } catch (error) {
+          this.errors = error;
+      }
+    },
+    beforeRouteEnter(to, from, next) {
+      if (!store.getters.loggedin) {
+        next();
+      } else {
+        next({ name: "Home" });
+      }
+    },
+  },
+};
 </script>
 
 <style>
-
 </style>

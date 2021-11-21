@@ -31,37 +31,41 @@
               <h2 class="post-title">
                 {{ article.title }}
               </h2>
-              
             </router-link>
             <h3 class="post-subtitle">
-                {{ article.sub_title }}
-              </h3>
+              {{ article.sub_title }}
+            </h3>
             <p class="post-meta">
               Posted by
               <a href="#!">{{ article.author }}</a>
               on {{ article.created_at }}
             </p>
             <p v-if="user.id == article.user_id">
-
-            <router-link
-              :to="{ name: 'edit-article', params: { id: article.id } }"
-            >
-              edit
-              
-            </router-link>
+              <router-link
+                :to="{ name: 'edit-article', params: { id: article.id } }"
+              >
+                edit
+              </router-link>
             </p>
-             <hr class="my-4" />
- 
+            <p v-if="user.id == article.user_id">
+              <a @click.prevent="deleteArticle(article.id)">Delete</a>
+            </p>
+            <hr class="my-4" />
           </div>
-          <!-- Divider--> 
-          
-          <div class="d-flex justify-content-end mb-4"   v-for="link in links" :key="link.active">
-            <button class="btn btn-primary text-uppercase"  @click="getAllArticle(link.url)"
-              >{{link.label}}</button
+          <!-- Divider-->
+
+          <div
+            class="d-flex justify-content-end mb-4"
+            v-for="link in links"
+            :key="link.active"
+          >
+            <button
+              class="btn btn-primary text-uppercase"
+              @click="getAllArticle(link.url)"
             >
-         
+              {{ link.label }}
+            </button>
           </div>
-          
         </div>
       </div>
     </div>
@@ -73,38 +77,40 @@
 
 export default {
   name: "Home",
-  data(){
-    return{
+  data() {
+    return {
       user: this.$store.state.user,
-      links:[],
-
-    }
+      links: [],
+    };
   },
   computed: {
     articles() {
       return this.$store.getters.getArticles;
     },
-    
   },
   created() {
     this.getAllArticle();
-    
   },
- 
 
   methods: {
-    async getAllArticle(page= "/?page=1") {
-      
+    async getAllArticle(page = "/?page=1") {
       await this.$store.dispatch("fetchArticles", {
-        URL: "articles"+page,
+        URL: "articles" + page,
       });
       this.links = await this.articles.links.filter((link) => {
-       
-       return !link.label.includes('pagination')
-    })
+        return !link.label.includes("pagination");
+      });
+    },
+    async deleteArticle(id) {
+      const result = await this.$SwalChecks(
+        "You won't be able to revert this!"
+      );
+      if (result.value) {
+        const URL = "articles/" + id;
+        await this.$store.dispatch("deleteArticle", URL);
+        this.getAllArticle();
+      }
     },
   },
- 
-  
 };
 </script>

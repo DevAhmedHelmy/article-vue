@@ -1,6 +1,6 @@
 <template>
   <div>
-      <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
       <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="index.html">Start Bootstrap</a>
         <button
@@ -23,30 +23,49 @@
               >
             </li>
             <li class="nav-item">
-              <router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{name:'create-article'}"
+              <router-link
+                class="nav-link px-lg-3 py-3 py-lg-4"
+                :to="{ name: 'create-article' }"
                 >Create New Article</router-link
               >
             </li>
             <li class="nav-item">
-              <router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{name:'about'}"
+              <router-link
+                class="nav-link px-lg-3 py-3 py-lg-4"
+                :to="{ name: 'about' }"
                 >About</router-link
               >
             </li>
-           
+
             <li class="nav-item">
-              <router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{name:'contact'}"
+              <router-link
+                class="nav-link px-lg-3 py-3 py-lg-4"
+                :to="{ name: 'contact' }"
                 >Contact</router-link
               >
             </li>
             <li class="nav-item">
-              <router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{name:'login'}"
+              <router-link
+                class="nav-link px-lg-3 py-3 py-lg-4"
+                :to="{ name: 'login' }"
                 >login</router-link
               >
             </li>
             <li class="nav-item">
-              <router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{name:'register'}"
+              <router-link
+                class="nav-link px-lg-3 py-3 py-lg-4"
+                :to="{ name: 'register' }"
                 >register</router-link
               >
+            </li>
+            <li class="nav-item" id="logout">
+              <a
+                @click="logout"
+                id="logout"
+                class="nav-link px-lg-3 py-3 py-lg-4"
+              >
+                Logout
+              </a>
             </li>
           </ul>
         </div>
@@ -57,10 +76,24 @@
 
 <script>
 export default {
-    name:"navbar"
-}
+  name: "navbar",
+  data() {
+    return {
+      user: this.$store.state.user,
+    };
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("destroyToken").then(() => {
+        this.$router.push({ name: "login" });
+      });
+    },
+  },
+};
 </script>
 
-<style>
-
+<style scoped>
+#logout {
+  cursor: pointer;
+}
 </style>

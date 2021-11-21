@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import { store } from "../../../Store/store";
+import { store } from "../../../Store/Store";
 export default {
   name:"login",
   data(){

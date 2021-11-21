@@ -27,6 +27,9 @@ export default [
     components: {
       frontendPages: editArticle,
     },
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "create/articles",
