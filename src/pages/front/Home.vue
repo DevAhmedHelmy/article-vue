@@ -37,20 +37,29 @@
             </h3>
             <p class="post-meta">
               Posted by
-              <a href="#!">{{ article.author }}</a>
+              <a>{{ article.author }}</a>
               on {{ article.created_at }}
             </p>
-            <p >
-              <router-link v-if="isLoggedIn && user.id == article.user_id"
-                :to="{ name: 'edit-article', params: { id: article.id } }"
-              >
-                edit
-              </router-link>
-            </p>
-            <p  v-if="isLoggedIn && user.id == article.user_id">
-              <a @click.prevent="deleteArticle(article.id)">Delete</a>
-            </p>
-            <hr class="my-4" />
+            <div class="d-flex">
+              <p class="p-1">
+                <router-link
+                  class="btn btn-info"
+                  v-if="isLoggedIn"
+                  :to="{ name: 'edit-article', params: { id: article.id } }"
+                >
+                  edit
+                </router-link>
+              </p>
+              <p class="p-1" v-if="isLoggedIn">
+                <button
+                  class="btn btn-danger"
+                  @click.prevent="deleteArticle(article.id)"
+                >
+                  Delete
+                </button>
+              </p>
+            </div>
+            <hr class="my-2" />
           </div>
           <!-- Divider-->
 
@@ -88,7 +97,7 @@ export default {
     },
 
     user: function () {
-      return this.$store.getters.StateUser;
+      return this.$store.state.StateUser;
     },
     isLoggedIn: function () {
       return this.$store.getters.loggedin;
