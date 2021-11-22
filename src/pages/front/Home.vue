@@ -63,14 +63,12 @@
           </div>
           <!-- Divider-->
 
-          <div
-            class="d-flex justify-content-end mb-4"
-            v-for="link in links"
-            :key="link.active"
-          >
+          <div class="d-flex justify-content-end mb-4">
             <button
-              class="btn btn-primary text-uppercase"
+              class="btn btn-primary text-uppercase m-2"
               @click="getAllArticle(link.url)"
+              v-for="link in links"
+              :key="link.active"
             >
               {{ link.label }}
             </button>
