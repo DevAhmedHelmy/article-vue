@@ -63,7 +63,10 @@
           </div>
           <!-- Divider-->
 
-          <div class="d-flex justify-content-end mb-4">
+          <div
+            class="d-flex justify-content-end mb-4"
+            v-if="articles.data.length > 0"
+          >
             <button
               class="btn btn-primary text-uppercase m-2"
               @click="getAllArticle(link.url)"

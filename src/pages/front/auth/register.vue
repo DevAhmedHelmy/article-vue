@@ -44,9 +44,6 @@
                   data-sb-validations="required"
                 />
                 <label for="name">Name</label>
-                <div class="invalid-feedback" data-sb-feedback="name:required">
-                  A name is required.
-                </div>
               </div>
               <div class="form-floating">
                 <input
@@ -83,11 +80,7 @@
               <br />
 
               <!-- Submit Button-->
-              <button
-                class="btn btn-primary text-uppercase"
-                id="submitButton"
-                type="submit"
-              >
+              <button class="btn btn-primary text-uppercase" type="submit">
                 Register
               </button>
             </form>
@@ -114,7 +107,7 @@ export default {
         await this.$store.dispatch("register", this.registerForm);
         this.$router.push({ name: "Home" });
       } catch (error) {
-          this.errors = error;
+        this.errors = error;
       }
     },
     beforeRouteEnter(to, from, next) {
